@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * 注册BroadcastReceiver的方式一般有两种：在代码中注册和在AndroidManifest.xml中注册。
@@ -19,6 +20,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //增加点击事件通过点击发送广播
+        button.setOnClickListener {
+            //创建一个intent，把要发送的广播是传送进去
+            val intent = Intent("com.oyz.broadcasttest.MY_BROADCAST")
+            //通过setPackage让他变成显示广播
+            intent.setPackage(packageName)
+            sendBroadcast(intent)
+        }
+
+
         val intentFilter = IntentFilter()
         //android.intent.action.TIME_TICK 监听时间变化
         intentFilter.addAction("android.intent.action.TIME_TICK")
