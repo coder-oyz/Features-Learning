@@ -27,7 +27,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent("com.oyz.broadcasttest.MY_BROADCAST")
             //通过setPackage让他变成显示广播
             intent.setPackage(packageName)
-            sendBroadcast(intent)
+            //有序广播
+            sendOrderedBroadcast(intent, null)
+
+            //标准广播
+            //sendBroadcast(intent)
         }
 
 
