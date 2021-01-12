@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
+import java.lang.NullPointerException
 
 /**
  * 添加
@@ -99,6 +101,31 @@ class MainActivity : AppCompatActivity() {
             }
             cursor.close()
 
+        }
+        //事务测试
+        replaceData.setOnClickListener {
+            val db = dbHelper.writableDatabase
+            db.beginTransaction() //开启事务
+            try {
+                db.delete("Book",null,null)
+                if (true) {
+                    //手动抛出一个异常，让事务失败
+                    throw NullPointerException()
+                }
+                val values = ContentValues().apply {
+                    // 开始组装第一条数据
+                    put("name", "Game of Thrones")
+                    put("author", "George Martin")
+                    put("pages", 720)
+                    put("price", 20.95)
+                }
+                db.insert("Book", null, values) // 插入一条数据
+                db.endTransaction()  //事务执行成功
+            }catch (e: Exception){
+                e.printStackTrace()
+            }finally {
+                db.endTransaction()  //结束事务
+            }
         }
 
     }
