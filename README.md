@@ -11,3 +11,5 @@ file-persistence-test 是一些文件上传的初步学习记录
 shared-preferences-test  是一些使用SharedPreferences存储的初步学习记录
 
 database-test  是一些使用数据库存储的初步学习记录
+
+runtime-permission-test 运行时权限学习
