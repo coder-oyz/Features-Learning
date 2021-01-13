@@ -13,3 +13,5 @@ shared-preferences-test  是一些使用SharedPreferences存储的初步学习�
 database-test  是一些使用数据库存储的初步学习记录
 
 runtime-permission-test 运行时权限学习
+
+contacts-test  读取系统联系人
