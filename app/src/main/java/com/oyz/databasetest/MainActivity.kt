@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity() {
         queryData.setOnClickListener {
             // 查询数据
             val uri = Uri.parse("content://com.oyz.databasetest.provider/book")
-            contentResolver.query(uri, null, null, null, null)?.apply {
+            contentResolver.query(uri, null, null, null, null)?.build {
                 while (moveToNext()) {
                     val name = getString(getColumnIndex("name"))
                     val author = getString(getColumnIndex("author"))
