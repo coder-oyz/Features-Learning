@@ -32,7 +32,7 @@ class MyDatabaseHelper(val context: Context, name: String, version: Int): SQLite
         //执行sql
         db.execSQL(createBook)
         //db.execSQL(createCategory)
-        Toast.makeText(context, "Create succeeded", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context, "Create succeeded", Toast.LENGTH_SHORT).show()
     }
     //onUpgrade()方法是用于对数据库进行升级的，它在整个数据库的管理工作当中起着非常重要的作用。
     /*override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {

@@ -1,6 +1,7 @@
 package com.oyz.databasetest
 
 import android.content.ContentValues
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +24,9 @@ val cursor = db.rawQuery("select * from Book", null)
 
  */
 class MainActivity : AppCompatActivity() {
+
+    var bookId: String?= null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,6 +40,15 @@ class MainActivity : AppCompatActivity() {
 
         //添加数据
         addData.setOnClickListener {
+            // 添加数据
+            val uri = Uri.parse("content://com.oyz.databasetest.provider/book")
+            val values = contentValuesOf("name" to "A Clash of Kings", "author" to "George Martin", "pages" to 1040, "price" to 22.85)
+            val newUri = contentResolver.insert(uri, values)
+            bookId = newUri?.pathSegments?.get(1)
+        }
+
+
+        /*addData.setOnClickListener {
             val db = dbHelper.writableDatabase
             val values1 = ContentValues().apply {
                 // 开始组装第一条数据
@@ -55,26 +68,62 @@ class MainActivity : AppCompatActivity() {
             }
             db.insert("Book", null, values2) // 插入一条数据
 
-        }
+        }*/
 
         //更新数据
+
         updateData.setOnClickListener {
+            // 更新数据
+            bookId?.let {
+                val uri = Uri.parse("content://com.oyz.databasetest.provider/book/$it")
+                val values = contentValuesOf("name" to "A Storm of Swords", "pages" to 1216, "price" to 24.05)
+                contentResolver.update(uri, values, null, null)
+            }
+        }
+
+        /*updateData.setOnClickListener {
             val db = dbHelper.writableDatabase
             val values = ContentValues()
             values.put("price", 10.99)
             //The Da Vinci Code这本书 价格变成10.99
             db.update("Book", values, "name = ?", arrayOf("The Da Vinci Code"))
 
-        }
+        }*/
 
         //删除数据
         deleteData.setOnClickListener {
+            // 删除数据
+            bookId?.let {
+                val uri = Uri.parse("content://com.oyz.databasetest.provider/book/$it")
+                contentResolver.delete(uri, null, null)
+            }
+        }
+
+        /*deleteData.setOnClickListener {
             val db = dbHelper.writableDatabase
             db.delete("Book", "pages > ?", arrayOf("500"))
 
-        }
+        }*/
 
         //查询数据
+        queryData.setOnClickListener {
+            // 查询数据
+            val uri = Uri.parse("content://com.oyz.databasetest.provider/book")
+            contentResolver.query(uri, null, null, null, null)?.apply {
+                while (moveToNext()) {
+                    val name = getString(getColumnIndex("name"))
+                    val author = getString(getColumnIndex("author"))
+                    val pages = getInt(getColumnIndex("pages"))
+                    val price = getDouble(getColumnIndex("price"))
+                    Log.d("MainActivity", "book name is $name")
+                    Log.d("MainActivity", "book author is $author")
+                    Log.d("MainActivity", "book pages is $pages")
+                    Log.d("MainActivity", "book price is $price")
+                }
+                close()
+            }
+        }
+
         //七个参数
         //table	from table_name	指定查询的表名
         //columns	select column1, column2	指定查询的列名
@@ -83,7 +132,7 @@ class MainActivity : AppCompatActivity() {
         //groupBy	group by column	指定需要group by的列
         //having	having column = value	对group by后的结果进一步约束
         //orderBy	order by column1, column2	指定查询结果的排序方式
-        queryData.setOnClickListener {
+        /*queryData.setOnClickListener {
             val db = dbHelper.writableDatabase
             // 查询Book表中所有的数据
             val cursor = db.query("Book", null, null, null, null, null, null)
@@ -102,7 +151,7 @@ class MainActivity : AppCompatActivity() {
             }
             cursor.close()
 
-        }
+        }*/
         //事务测试
         replaceData.setOnClickListener {
             val db = dbHelper.writableDatabase
