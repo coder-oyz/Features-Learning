@@ -17,3 +17,6 @@ runtime-permission-test 运行时权限学习
 contacts-test  读取系统联系人
 
 notification-test 通知的学习
+
+cameraalbum-test 相册和摄像头调用
+
