@@ -23,4 +23,11 @@
         android:layout_height="wrap_content"
         android:text="Stop"/>
 
+    <!-- 播放视频 -->
+    <Button
+        android:id="@+id/next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Next"/>
+
 </LinearLayout>

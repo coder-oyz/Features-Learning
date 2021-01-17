@@ -1,5 +1,6 @@
 package com.oyz.playaudiotest
 
+import android.content.Intent
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,6 +28,11 @@ class MainActivity : AppCompatActivity() {
                 mediaPlayer.reset() // 停止播放
                 initMediaPlayer()
             }
+        }
+
+        next.setOnClickListener {
+            val intent = Intent(this, VideoActivity::class.java)
+            startActivity(intent)
         }
     }
 
