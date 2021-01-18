@@ -22,5 +22,9 @@ cameraalbum-test 相册和摄像头调用
 
 play-audio-test 播放音频、视频
 
+android-thread-test  线程
+
+
+
 
 
