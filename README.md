@@ -24,6 +24,8 @@ play-audio-test 播放音频、视频
 
 android-thread-test  线程
 
+service-test  服务端
+
 
 
 
