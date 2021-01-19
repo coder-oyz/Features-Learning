@@ -12,6 +12,7 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import kotlin.concurrent.thread
 
 class MyService : Service() {
 
@@ -63,6 +64,13 @@ class MyService : Service() {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         Log.d("MyService", "onStartCommand executed")
+        //使用线程处理耗时操作
+        thread {
+            //处理具体的逻辑
+
+            stopSelf()  //设置在Service执行完毕后，自动停止
+        }
+
         return super.onStartCommand(intent, flags, startId)
     }
 
