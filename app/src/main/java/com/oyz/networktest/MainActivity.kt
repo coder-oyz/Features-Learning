@@ -3,6 +3,8 @@ package com.oyz.networktest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -103,8 +105,8 @@ class MainActivity : AppCompatActivity() {
                     //parseXMLWithPull(responseData)
                     //sax解析方法
                    // parseXMLWithSAX(responseData)
-                    parseJSONWithJSONObject(responseData)
-                    //parseJSONWithGSON(responseData)
+                    //parseJSONWithJSONObject(responseData)
+                    parseJSONWithGSON(responseData)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -178,9 +180,10 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
-/*
+
     private fun parseJSONWithGSON(jsonData: String) {
         val gson = Gson()
+        //获取List<App>的类型
         val typeOf = object : TypeToken<List<App>>() {}.type
         val appList = gson.fromJson<List<App>>(jsonData, typeOf)
         for (app in appList) {
@@ -188,5 +191,5 @@ class MainActivity : AppCompatActivity() {
             Log.d("MainActivity", "name is ${app.name}")
             Log.d("MainActivity", "version is ${app.version}")
         }
-    }*/
+    }
 }
