@@ -11,7 +11,6 @@ import kotlin.concurrent.thread
 object HttpUtil {
 
     fun sendHttpRequest(address: String) {
-        thread {
             var connection: HttpURLConnection? = null
             try {
                 val response = StringBuilder()
@@ -32,7 +31,6 @@ object HttpUtil {
             } finally {
                 connection?.disconnect()
             }
-        }
     }
 
     /*fun sendHttpRequest(address: String, listener: HttpCallbackListener) {
