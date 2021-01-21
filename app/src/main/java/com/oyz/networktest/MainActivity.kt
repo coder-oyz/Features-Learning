@@ -91,8 +91,8 @@ class MainActivity : AppCompatActivity() {
                 val request = Request.Builder()
                         // 指定访问的服务器地址是电脑本机
                        // .url("https://www.baidu.com")
-                    .url("http://10.0.2.2/get_data.xml")
-//                        .url("http://10.0.2.2/get_data.json")
+                   // .url("http://10.0.2.2/get_data.xml")
+                        .url("http://10.0.2.2/get_data.json")
                         .build()
                 val response = client.newCall(request).execute()
                 val responseData = response.body?.string()
@@ -102,8 +102,8 @@ class MainActivity : AppCompatActivity() {
                         //按照Pull解析方式
                     //parseXMLWithPull(responseData)
                     //sax解析方法
-                    parseXMLWithSAX(responseData)
- //                   parseJSONWithJSONObject(responseData)
+                   // parseXMLWithSAX(responseData)
+                    parseJSONWithJSONObject(responseData)
                     //parseJSONWithGSON(responseData)
                 }
             } catch (e: Exception) {
@@ -161,7 +161,7 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
-/*
+
     private fun parseJSONWithJSONObject(jsonData: String) {
         try {
             val jsonArray = JSONArray(jsonData)
@@ -178,7 +178,7 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
-
+/*
     private fun parseJSONWithGSON(jsonData: String) {
         val gson = Gson()
         val typeOf = object : TypeToken<List<App>>() {}.type
