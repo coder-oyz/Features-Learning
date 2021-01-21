@@ -28,6 +28,8 @@ service-test  服务端
 
 webview-test  浏览器显示器
 
+network-test  体验HttpURLConnection的用法，手动发送http请求
+
 
 
 
