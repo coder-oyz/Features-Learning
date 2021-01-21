@@ -100,8 +100,9 @@ class MainActivity : AppCompatActivity() {
                     //showResponse(responseData)
 
                         //按照Pull解析方式
-                    parseXMLWithPull(responseData)
-//                    parseXMLWithSAX(responseData)
+                    //parseXMLWithPull(responseData)
+                    //sax解析方法
+                    parseXMLWithSAX(responseData)
  //                   parseJSONWithJSONObject(responseData)
                     //parseJSONWithGSON(responseData)
                 }
@@ -147,7 +148,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /*private fun parseXMLWithSAX(xmlData: String) {
+    private fun parseXMLWithSAX(xmlData: String) {
         try {
             val factory = SAXParserFactory.newInstance()
             val xmlReader = factory.newSAXParser().getXMLReader()
@@ -160,7 +161,7 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
-
+/*
     private fun parseJSONWithJSONObject(jsonData: String) {
         try {
             val jsonArray = JSONArray(jsonData)
