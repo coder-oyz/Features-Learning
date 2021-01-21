@@ -10,30 +10,8 @@ import kotlin.concurrent.thread
 
 object HttpUtil {
 
-    fun sendHttpRequest(address: String) {
-            var connection: HttpURLConnection? = null
-            try {
-                val response = StringBuilder()
-                val url = URL(address)
-                connection = url.openConnection() as HttpURLConnection
-                connection.connectTimeout = 8000
-                connection.readTimeout = 8000
-                val input = connection.inputStream
-                val reader = BufferedReader(InputStreamReader(input))
-                reader.use {
-                    reader.forEachLine {
-                        response.append(it)
-                    }
-                }
 
-            } catch (e: Exception) {
-                e.printStackTrace()
-            } finally {
-                connection?.disconnect()
-            }
-    }
-
-    /*fun sendHttpRequest(address: String, listener: HttpCallbackListener) {
+    fun sendHttpRequest(address: String, listener: HttpCallbackListener) {
         thread {
             var connection: HttpURLConnection? = null
             try {
@@ -50,6 +28,7 @@ object HttpUtil {
                     }
                 }
                 // 回调onFinish()方法
+                //请求成功，将响应数据传入listener
                 listener.onFinish(response.toString())
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -59,8 +38,11 @@ object HttpUtil {
                 connection?.disconnect()
             }
         }
-    }*/
+    }
 
+    /**
+     * 封装好了回调
+     */
     fun sendOkHttpRequest(address: String, callback: okhttp3.Callback) {
         val client = OkHttpClient()
         val request = Request.Builder()
