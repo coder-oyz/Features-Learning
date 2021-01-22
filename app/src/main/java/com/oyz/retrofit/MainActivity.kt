@@ -18,11 +18,13 @@ class MainActivity : AppCompatActivity() {
          * retrofit 使用示例
          */
         getAppDataBtn.setOnClickListener {
-            val retrofit = Retrofit.Builder()
+            /*val retrofit = Retrofit.Builder()
                     .baseUrl("http://10.0.2.2/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
-            val appService = retrofit.create(AppService::class.java)
+            val appService = retrofit.create(AppService::class.java)*/
+            //Retrofot 构造器的最佳写法
+            val appService = ServiceCreator.create<AppService>()
             appService.getAppData().enqueue(object : Callback<List<App>> {
                 override fun onResponse(call: Call<List<App>>,
                                         response: Response<List<App>>) {
