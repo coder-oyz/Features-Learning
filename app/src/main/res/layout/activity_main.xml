@@ -7,7 +7,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
+<!--  CoordinatorLayout在FloatingActionButton被Snackbar遮住时，FloatingActionButton会自动往上浮动
+  CoordinatorLayout 是一种加强的FrameLayout
+ -->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -29,7 +32,7 @@
             app:elevation="8dp"/><!-- 指定悬浮高度  高度越小，投影范围越小，投影效果越浓-->
 
 
-    </FrameLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 <!--  必须指定layout_gravity  -->
 <!--    <TextView-->
 <!--        android:layout_width="match_parent"-->
