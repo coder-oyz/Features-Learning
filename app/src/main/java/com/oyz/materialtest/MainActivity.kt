@@ -20,6 +20,12 @@ class MainActivity : AppCompatActivity() {
             it.setDisplayHomeAsUpEnabled(true)
             it.setHomeAsUpIndicator(R.drawable.ic_menu)
         }
+        //call 默认选中
+        navView.setCheckedItem(R.id.navCall)
+        navView.setNavigationItemSelectedListener {
+            drawerLayout.closeDrawers() //关闭滑动菜单
+            true
+        }
 
     }
 
