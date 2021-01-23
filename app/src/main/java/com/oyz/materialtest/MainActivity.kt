@@ -27,6 +27,10 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        fab.setOnClickListener {
+            Toast.makeText(this, "FAB clicked", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
 
