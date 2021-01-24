@@ -57,22 +57,23 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = layoutManager
         val adapter = FruitAdapter(this, fruitList)
         recyclerView.adapter = adapter
-       /* swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
+        //刷新逻辑
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
         swipeRefresh.setOnRefreshListener {
             refreshFruits(adapter)
-        }*/
+        }
     }
 
-    /*private fun refreshFruits(adapter: FruitAdapter) {
+    private fun refreshFruits(adapter: FruitAdapter) {
         thread {
             Thread.sleep(2000)
-            runOnUiThread {
+            runOnUiThread { //当前线程换回主线程
                 initFruits()
                 adapter.notifyDataSetChanged()
                 swipeRefresh.isRefreshing = false
             }
         }
-    }*/
+    }
 
     private fun initFruits() {
         fruitList.clear()

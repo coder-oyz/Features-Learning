@@ -37,12 +37,21 @@
                 app:layout_scrollFlags="scroll|enterAlways|snap"/>
 
         </com.google.android.material.appbar.AppBarLayout>
-        <!-- 卡片式布局 -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+
+        <!-- 加入下拉刷新 -->
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <!-- 卡片式布局 -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <!-- 悬浮按钮 -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
