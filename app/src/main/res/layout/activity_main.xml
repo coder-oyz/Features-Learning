@@ -13,20 +13,36 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <!-- 使用AppBarLayout解决Toolbar被遮掩问题
+        1.加入AppBarLayout布局
+        2.RecyclerView内使用  app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            android:layout_height="wrap_content">
 
+            <!-- app:layout_scrollFlags="scroll|enterAlways|snap"
+                RecyclerView滚动的事件会通知给AppBarLayout
+                用上面属性设置 ：
+                    scroll：向上滚动时Toolbar会一起向上滚动，并实现隐藏
+                    enterAlways：向下滚动时Toolbar会一起向下滚动，并实现显示
+                    snap：Toolbar还未完全隐藏或显示时，会跟据当前滚动的距离自动选择隐藏还是显示
+             -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_scrollFlags="scroll|enterAlways|snap"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
         <!-- 卡片式布局 -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         <!-- 悬浮按钮 -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
