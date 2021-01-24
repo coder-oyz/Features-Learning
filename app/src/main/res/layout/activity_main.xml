@@ -21,6 +21,13 @@
             android:background="@color/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        <!-- 卡片式布局 -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <!-- 悬浮按钮 -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
