@@ -18,8 +18,9 @@ class FruitAdapter(val context: Context, val fruitList: List<Fruit>) : RecyclerV
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.fruit_item, parent, false)
+        //点击事件
         val holder = ViewHolder(view)
-        /*holder.itemView.setOnClickListener {
+        holder.itemView.setOnClickListener {
             val position = holder.adapterPosition
             val fruit = fruitList[position]
             val intent = Intent(context, FruitActivity::class.java).apply {
@@ -27,7 +28,7 @@ class FruitAdapter(val context: Context, val fruitList: List<Fruit>) : RecyclerV
                 putExtra(FruitActivity.FRUIT_IMAGE_ID, fruit.imageId)
             }
             context.startActivity(intent)
-        }*/
+        }
         return holder
     }
 

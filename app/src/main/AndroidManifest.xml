@@ -9,8 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-            android:label="Fruits"> <!--Toolbar可以 指定标题-->
+        <activity android:name=".FruitActivity"
+            android:theme="@style/FruitActivityTheme"></activity>  <!-- 引入样式使出现在系统状态栏里面 -->
+        <activity
+            android:name=".MainActivity"
+            android:label="Fruits"> <!-- Toolbar可以 指定标题 -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
