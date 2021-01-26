@@ -41,6 +41,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         refreshCounter()
+
+        //加入生命周期的监听
+        lifecycle.addObserver(MyObserver(lifecycle))
     }
 
     override fun onPause() {
