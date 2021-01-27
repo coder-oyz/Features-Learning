@@ -2,13 +2,31 @@ package com.oyz.jetpacktest
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 
 /**
- * 将原来的counter改为_counter，再加一个private修饰符，使对外不可见
- * 再加一个counter声明为不可变的LiveData,它的get属性方法返回_counter
+ * map 和 switchMap
  */
 class MainViewModel(countReserved: Int) : ViewModel() {
+    val userLiveData = MutableLiveData<User>()
+
+    private val userIdLiveData = MutableLiveData<String>()
+    val user: LiveData<User> = Transformations.switchMap(userIdLiveData) {userId ->
+        Repository.getUser(userId)
+    }
+
+    fun getUser(userId: String){
+        userIdLiveData.value = userId
+    }
+
+    //使用map使仅暴露名字给外面，不会暴露age
+    //会自动监听变化
+    val userName: LiveData<String> = Transformations.map(userLiveData) {user ->
+        "${user.firstName} ${user.lastName}"
+    }
+
+
     val counter: LiveData<Int> get() =_counter
     val _counter = MutableLiveData<Int>()
 
@@ -25,6 +43,29 @@ class MainViewModel(countReserved: Int) : ViewModel() {
         _counter.value = 0
     }
 }
+
+
+/**
+ * 将原来的counter改为_counter，再加一个private修饰符，使对外不可见
+ * 再加一个counter声明为不可变的LiveData,它的get属性方法返回_counter
+ */
+/*class MainViewModel(countReserved: Int) : ViewModel() {
+    val counter: LiveData<Int> get() =_counter
+    val _counter = MutableLiveData<Int>()
+
+    init {
+        _counter.value = countReserved
+    }
+
+    fun plusOne() {
+        val count = _counter.value ?:0
+        _counter.value = count + 1
+    }
+
+    fun clear() {
+        _counter.value = 0
+    }
+}*/
 
 
 /**

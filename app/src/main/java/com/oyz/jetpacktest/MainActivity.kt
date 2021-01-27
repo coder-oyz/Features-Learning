@@ -6,10 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings.Global.putInt
 import androidx.core.content.edit
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -45,10 +42,29 @@ class MainActivity : AppCompatActivity() {
             viewModel.clear()
         }
 
+        getUserBtn.setOnClickListener {
+            val userId = (0..10000).random().toString()
+            viewModel.getUser(userId)
+        }
+
+        viewModel.user.observe(this) {user ->
+            infoText.text = user.firstName
+        }
+
         refreshCounter()
 
         //加入生命周期的监听
         lifecycle.addObserver(MyObserver(lifecycle))
+    }
+
+    /**
+     * 不能使用,因为这个时候一直监听的是老的LiveData实例，这时候就要使用switchMap了
+     * viewModel.counter.observe(this) {count ->
+        infoText.text = count.toString()
+        }
+     */
+    fun getUser(userId: String):LiveData<User> {
+        return Repository.getUser(userId)
     }
 
     override fun onPause() {
@@ -61,8 +77,11 @@ class MainActivity : AppCompatActivity() {
     private fun refreshCounter() {
         //infoText.text = viewModel.counter.toString()
         //监听刷新数据
-        viewModel.counter.observe(this, Observer { count ->
+        /*viewModel.counter.observe(this, Observer { count ->
             infoText.text = count.toString()
-        })
+        })*/
+        viewModel.counter.observe(this) {count ->
+            infoText.text = count.toString()
+        }
     }
 }
