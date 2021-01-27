@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings.Global.putInt
 import androidx.core.content.edit
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -30,14 +31,18 @@ class MainActivity : AppCompatActivity() {
 
         //加一
         plusOneBtn.setOnClickListener {
-            viewModel.counter++
-            refreshCounter()
+            /*viewModel.counter++
+            refreshCounter()*/
+
+            viewModel.plusOne()
         }
 
         //清零
         clearBtn.setOnClickListener {
-            viewModel.counter = 0
-            refreshCounter()
+            /*viewModel.counter = 0
+            refreshCounter()*/
+
+            viewModel.clear()
         }
 
         refreshCounter()
@@ -49,11 +54,15 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         sp.edit {
-            putInt("count_reserved",viewModel.counter)
+            putInt("count_reserved",viewModel.counter.value?:0)
         }
     }
 
     private fun refreshCounter() {
-        infoText.text = viewModel.counter.toString()
+        //infoText.text = viewModel.counter.toString()
+        //监听刷新数据
+        viewModel.counter.observe(this, Observer { count ->
+            infoText.text = count.toString()
+        })
     }
 }
