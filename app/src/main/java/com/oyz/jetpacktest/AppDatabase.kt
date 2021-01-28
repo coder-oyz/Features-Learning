@@ -4,13 +4,29 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-
-@Database(version = 1, entities = [User::class])
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
+//升级版本，添加实体
+@Database(version = 3, entities = [User::class, Book::class])
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
 
+    abstract fun bookDao(): BookDao
+
     companion object {
+        //编写数据库升级逻辑
+        private val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("create table Book (id integer primary key autoincrement not null, name text not null, pages integer not null)")
+            }
+        }
+
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("alter table Book add column author text not null default 'unknown'")
+            }
+        }
 
         private var instance: AppDatabase? = null
 
@@ -19,8 +35,14 @@ abstract class AppDatabase : RoomDatabase() {
             instance?.let {
                 return it
             }
-            return Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "app_database").build().apply {
-                instance = this
+            return Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "app_database")
+                //只要对数据库进行了升级，Room就会将当前数据库销毁，重新创建
+                //.fallbackToDestructiveMigration()
+                //.allowMainThreadQueries()  允许Room再主线程进行数据库操作，仅测试环境用
+                    //加入升级
+                .addMigrations(MIGRATION_1_2 , MIGRATION_2_3)
+                .build().apply {
+                    instance = this
             }
         }
     }
