@@ -8,6 +8,8 @@ import android.provider.Settings.Global.putInt
 import android.util.Log
 import androidx.core.content.edit
 import androidx.lifecycle.*
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.concurrent.thread
 
@@ -83,10 +85,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        /*doWorkBtn.setOnClickListener {
+        doWorkBtn.setOnClickListener {
+            //请求获取与传入WorkManager
             val request = OneTimeWorkRequest.Builder(SimpleWorker::class.java).build()
             WorkManager.getInstance(this).enqueue(request)
-        }*/
+        }
 
         refreshCounter()
 
