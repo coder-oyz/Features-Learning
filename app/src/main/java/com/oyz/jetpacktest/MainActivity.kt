@@ -8,9 +8,12 @@ import android.provider.Settings.Global.putInt
 import android.util.Log
 import androidx.core.content.edit
 import androidx.lifecycle.*
+import androidx.work.BackoffPolicy
 import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
@@ -87,8 +90,30 @@ class MainActivity : AppCompatActivity() {
         }
         doWorkBtn.setOnClickListener {
             //请求获取与传入WorkManager
-            val request = OneTimeWorkRequest.Builder(SimpleWorker::class.java).build()
-            WorkManager.getInstance(this).enqueue(request)
+            val request = OneTimeWorkRequest.Builder(SimpleWorker::class.java)
+                //让后台任务在指定延迟时间后运行  5分钟
+                .setInitialDelay(5, TimeUnit.MINUTES)
+                 //添加标签   可以通过标签批量取消任务
+                .addTag("simple")
+                //如果后台任务的doWork()反回了Result.retry(),可以通过setBackoffCriteria重新执行任务
+                    //时间不少于10秒后重新执行任务，BackoffPolicy.LINEAR指定延迟形式
+                .setBackoffCriteria(BackoffPolicy.LINEAR, 10, TimeUnit.SECONDS)
+                .build()
+
+
+            WorkManager.getInstance(this)
+                    //监听任务执行结果，进行结果处理
+                .getWorkInfoByIdLiveData(request.id)
+                .observe(this) { workInfo ->
+                    if(workInfo.state == WorkInfo.State.SUCCEEDED){
+                        Log.d("MainActivity","do work succeeded")
+                    }else if(workInfo.state == WorkInfo.State.FAILED){
+                        Log.d("MainActivity","do work failed")
+                    }
+                }
+                //.enqueue(request)
+
+
         }
 
         refreshCounter()
